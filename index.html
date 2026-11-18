@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#081724">
+<title>دائرة LC — منظر علوي ثلاثي الأبعاد</title>
+<style>
+:root{color-scheme:dark;--bg:#081724;--panel:#102737;--edge:#284656;--text:#edf8fa;--muted:#8caebd;--cyan:#50e4d1;--amber:#ffb769}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif}body{overflow:hidden}button,select,input{font:inherit}button,select{cursor:pointer}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}.app{height:100vh;height:100dvh;min-height:530px;padding:14px;display:grid;gap:12px;grid-template-rows:minmax(240px,1fr) clamp(225px,29vh,280px);max-width:1900px;margin:auto}.panel{border:1px solid var(--edge);border-radius:20px;background:linear-gradient(135deg,#122b3b,#0e2231);min-width:0;min-height:0;overflow:hidden}.scene{position:relative;background:radial-gradient(ellipse at 50% 45%,#1b3b49,#102737 65%,#0c202f);isolation:isolate}.scene canvas{position:absolute;inset:0;display:block;width:100%;height:100%}#fallbackCanvas{display:none}#overlayCanvas{pointer-events:none}.plots{display:grid;grid-template-columns:minmax(210px,25%) minmax(0,1fr);gap:12px;direction:ltr;min-height:0}.energy,.wave{direction:rtl;padding:16px 19px}.energy{display:flex;flex-direction:column}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:24px}.panel-head h2{font-size:14px;margin:0;font-weight:700}.total{font:12px "Segoe UI",sans-serif;color:var(--muted);direction:ltr;white-space:nowrap}.bars{display:flex;flex:1;min-height:0;gap:24px;justify-content:center;align-items:stretch;padding:14px 12px 0}.bar-group{width:84px;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:0}.bar{flex:1;width:100%;position:relative;min-height:50px;background:#071b29;border:1px solid #294858;border-radius:10px;overflow:hidden}.fill{position:absolute;inset:auto 0 0;height:0;border-radius:3px 3px 0 0;will-change:height}.fill.ec{background:linear-gradient(#77f3df,#159c91);box-shadow:0 -4px 18px #4cdac733}.fill.el{background:linear-gradient(#ffd39b,#dc7b2d);box-shadow:0 -4px 18px #fda95733}.bar:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to top,transparent 0,transparent calc(25% - 1px),#c4f4ff16 calc(25% - 1px),#c4f4ff16 25%);pointer-events:none}.bar-label{display:flex;gap:6px;align-items:center;justify-content:center;font-size:11px;white-space:nowrap;color:#d8e9ee}.bar-value{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr;line-height:1.05}.ec-color{color:var(--cyan)}.el-color{color:var(--amber)}.wave{display:grid;grid-template-rows:auto minmax(80px,1fr) auto;gap:8px}.legend{display:flex;gap:20px;align-items:center;font-size:12px;flex-wrap:wrap}.legend span{display:flex;align-items:center;gap:7px;white-space:nowrap}.legend i{height:3px;width:18px;border-radius:3px;background:var(--cyan)}.legend .current i{background:var(--amber)}.time{direction:ltr;font:12px "Segoe UI",sans-serif;color:#aec9d6;white-space:nowrap;font-variant-numeric:tabular-nums}.graph{min-width:0;min-height:0;position:relative}.graph canvas{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.controls{display:grid;grid-template-columns:42px 42px 64px minmax(80px,1fr);direction:ltr;align-items:center;gap:9px}.control{height:40px;border-radius:10px;border:1px solid #345566;background:#173346;color:#e8f8fa;display:flex;align-items:center;justify-content:center;padding:0}.control:hover{background:#234658}.control svg{width:18px;height:18px}.play{background:#4ddcc8;color:#082b34;border-color:#4ddcc8}.play:hover{background:#6bebd9}.speed{padding:0 7px;font-size:12px;text-align:center;appearance:auto;width:64px}.scrub{display:flex;align-items:center;height:40px;padding:0 2px}input[type=range]{direction:ltr;appearance:none;-webkit-appearance:none;width:100%;height:5px;margin:0;border-radius:8px;background:linear-gradient(to right,#50ddca var(--progress,0%),#2d4c5d var(--progress,0%));cursor:pointer;touch-action:pan-y}input[type=range]::-webkit-slider-thumb{appearance:none;width:17px;height:17px;background:#dffff7;border:3px solid #40cfb9;border-radius:50%;box-shadow:0 2px 6px #0005}input[type=range]::-moz-range-thumb{width:12px;height:12px;background:#dffff7;border:3px solid #40cfb9;border-radius:50%}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+@media(max-width:700px){.app{padding:9px;gap:9px;grid-template-rows:minmax(220px,1fr) 124px 223px;min-height:603px}.plots{display:contents}.panel{border-radius:15px}.energy,.wave{padding:12px 14px}.panel-head h2{font-size:12px}.energy{gap:6px}.bars{padding:0;gap:20px;direction:rtl;align-items:center}.bar-group{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:20px 22px;width:50%;gap:6px}.bar-label{font-size:11px;justify-content:start}.bar-value{font-size:14px;text-align:left}.bar{grid-column:1/-1;grid-row:2;min-height:0;height:22px;border-radius:6px}.fill{height:100%!important;width:var(--energy,0%);inset:0 auto 0 0;border-radius:0}.bar:after{background:repeating-linear-gradient(to right,transparent 0,transparent calc(25% - 1px),#c4f4ff16 calc(25% - 1px),#c4f4ff16 25%)}.legend{font-size:11px;gap:14px}.time{font-size:11px}.wave{gap:6px}.controls{grid-template-columns:40px 40px 60px minmax(60px,1fr);gap:8px}.speed{width:60px}.control{height:39px}}
+@media(max-width:400px){.legend{gap:10px;font-size:10px}.legend i{width:13px}.time{font-size:10px}.wave{padding:11px}.controls{gap:7px}.bar-label{font-size:10px}}
+@media(max-height:640px) and (min-width:701px){.app{grid-template-rows:minmax(200px,1fr) 210px;min-height:450px;padding:9px;gap:9px}.plots{gap:9px}.energy,.wave{padding:11px 15px}.bars{padding-top:8px}}
+@media(max-height:480px) and (min-width:701px){.app{grid-template-rows:minmax(100px,1fr) 200px;min-height:330px}.wave{gap:6px}.bars{gap:16px}}
+@media(max-height:602px) and (max-width:700px){body{overflow:auto}}
+@media(max-height:329px) and (min-width:701px){body{overflow:auto}}
+</style>
+</head>
+<body>
+<main class="app" aria-label="محاكاة دائرة LC">
+<section id="sceneCard" class="panel scene" aria-label="دائرة متسعة ومحث متصلة بمنظر علوي ثلاثي الأبعاد">
+<canvas id="glCanvas" aria-label="دائرة LC ثلاثية الأبعاد"></canvas><canvas id="fallbackCanvas" aria-hidden="true"></canvas><canvas id="overlayCanvas" aria-hidden="true"></canvas>
+</section>
+<div class="plots">
+<section class="panel energy" aria-label="الطاقة الكهربائية والمغناطيسية">
+<div class="panel-head"><h2>الطاقة</h2><span class="total">E<sub>C</sub> + E<sub>L</sub> = 100%</span></div>
+<div class="bars">
+<div class="bar-group"><div class="bar"><div id="electricalFill" class="fill ec"></div></div><span class="bar-label">كهربائية <bdi>E<sub>C</sub></bdi></span><output id="electricalPct" class="bar-value ec-color">100%</output></div>
+<div class="bar-group"><div class="bar"><div id="magneticFill" class="fill el"></div></div><span class="bar-label">مغناطيسية <bdi>E<sub>L</sub></bdi></span><output id="magneticPct" class="bar-value el-color">0%</output></div>
+</div>
+</section>
+<section class="panel wave" aria-label="موجتا الشحنة والتيار مع الزمن">
+<div class="panel-head"><div class="legend"><span><i></i>الشحنة Q</span><span class="current"><i></i>التيار I</span></div><output id="timeChip" class="time">t / T = 0.00</output></div>
+<div class="graph"><canvas id="graphCanvas" aria-label="الشحنة والتيار النسبيان خلال دورتين؛ اسحب لتغيير الزمن"></canvas></div>
+<div class="controls">
+<button id="playBtn" class="control play" aria-label="إيقاف مؤقت" title="إيقاف مؤقت"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg></button>
+<button id="resetBtn" class="control" aria-label="إعادة إلى البداية" title="إعادة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 1 1 1.3 7M4 4v6h6"/></svg></button>
+<select id="speedSelect" class="control speed" aria-label="سرعة العرض" title="سرعة العرض"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="3">3×</option></select>
+<div class="scrub"><input id="timeSlider" type="range" min="0" max="1000" value="0" step="1" aria-label="الزمن خلال دورتين"></div>
+</div>
+</section>
+</div>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), TWO=2*Math.PI,MAX_THETA=2*TWO;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+let gl,program,loc,mesh={},webgl=false;
+const V={add:(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],sub:(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],scale:(a,s)=>[a[0]*s,a[1]*s,a[2]*s],cross:(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],dot:(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],norm:a=>{let k=Math.hypot(...a)||1;return a.map(x=>x/k)}};
+const M={identity:()=>[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],mul:(a,b)=>{let o=new Array(16).fill(0);for(let c=0;c<4;c++)for(let r=0;r<4;r++)for(let k=0;k<4;k++)o[c*4+r]+=a[k*4+r]*b[c*4+k];return o;},perspective:(fov,aspect,near,far)=>{let f=1/Math.tan(fov/2), nf=1/(near-far);return [f/aspect,0,0,0,0,f,0,0,0,0,(far+near)*nf,-1,0,0,2*far*near*nf,0]},lookAt:(eye,target,up)=>{let z=V.norm(V.sub(eye,target)),x=V.norm(V.cross(up,z)),y=V.cross(z,x);return [x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-V.dot(x,eye),-V.dot(y,eye),-V.dot(z,eye),1]},translate:(x,y,z)=>[1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1],scale:(x,y,z)=>[x,0,0,0,0,y,0,0,0,0,z,0,0,0,0,1],rotZ:a=>[Math.cos(a),Math.sin(a),0,0,-Math.sin(a),Math.cos(a),0,0,0,0,1,0,0,0,0,1],rotX:a=>[1,0,0,0,0,Math.cos(a),Math.sin(a),0,0,-Math.sin(a),Math.cos(a),0,0,0,0,1],rotY:a=>[Math.cos(a),0,-Math.sin(a),0,0,1,0,0,Math.sin(a),0,Math.cos(a),0,0,0,0,1],apply:(m,v)=>{let x=v[0],y=v[1],z=v[2],w=1;return [m[0]*x+m[4]*y+m[8]*z+m[12]*w,m[1]*x+m[5]*y+m[9]*z+m[13]*w,m[2]*x+m[6]*y+m[10]*z+m[14]*w,m[3]*x+m[7]*y+m[11]*z+m[15]*w]}};
+function makeMesh(pos,nor,ids){const buff=(arr,type)=>{let b=gl.createBuffer();gl.bindBuffer(type, b);gl.bufferData(type, arr,gl.STATIC_DRAW);return b};return {p:buff(new Float32Array(pos),gl.ARRAY_BUFFER),n:buff(new Float32Array(nor),gl.ARRAY_BUFFER),idx:buff(new Uint16Array(ids),gl.ELEMENT_ARRAY_BUFFER),cnt:ids.length};}
+function buildBox(){let p=[],n=[],ids=[];const faces=[[[1,0,0],[1,3,2,6]], [[-1,0,0],[0,4,7,5]]];let quad=[[[1,0,0],[[.5,-.5,-.5],[.5,-.5,.5],[.5,.5,.5],[.5,.5,-.5]]],[[-1,0,0],[[-.5,-.5,.5],[-.5,-.5,-.5],[-.5,.5,-.5],[-.5,.5,.5]]],[[0,1,0],[[-.5,.5,-.5],[.5,.5,-.5],[.5,.5,.5],[-.5,.5,.5]]],[[0,-1,0],[[-.5,-.5,.5],[.5,-.5,.5],[.5,-.5,-.5],[-.5,-.5,-.5]]],[[0,0,1],[[-.5,-.5,.5],[-.5,.5,.5],[.5,.5,.5],[.5,-.5,.5]]],[[0,0,-1],[[.5,-.5,-.5],[.5,.5,-.5],[-.5,.5,-.5],[-.5,-.5,-.5]]]];for(let f of quad){let base=p.length/3;for(let pt of f[1]){p.push(...pt);n.push(...f[0])}ids.push(base,base+1,base+2,base,base+2,base+3)}return makeMesh(p,n,ids);}
+function buildSphere(stacks=12,slices=18){let p=[],n=[],ids=[];for(let j=0;j<=stacks;j++){let phi=j*Math.PI/stacks;for(let i=0;i<=slices;i++){let a=i*TWO/slices,pt=[Math.sin(phi)*Math.cos(a),Math.cos(phi),Math.sin(phi)*Math.sin(a)];p.push(...pt);n.push(...pt);}}for(let j=0;j<stacks;j++)for(let i=0;i<slices;i++){let a=j*(slices+1)+i,b=a+slices+1;ids.push(a,b,a+1,b,b+1,a+1);}return makeMesh(p,n,ids);}
+function buildTube(path,radius=0.045,sides=8){let p=[],n=[],ids=[];for(let i=0;i<path.length;i++){let tangent=V.norm(V.sub(path[Math.min(path.length-1,i+1)],path[Math.max(0,i-1)]));let axis=Math.abs(V.dot(tangent,[0,0,1]))>.92?[0,1,0]:[0,0,1];let u=V.norm(V.cross(tangent,axis)),v=V.norm(V.cross(tangent,u));for(let k=0;k<=sides;k++){let a=k*TWO/sides,no=V.add(V.scale(u,Math.cos(a)),V.scale(v,Math.sin(a))),pt=V.add(path[i],V.scale(no,radius));p.push(...pt);n.push(...no);}}
+ for(let i=0;i<path.length-1;i++)for(let j=0;j<sides;j++){let a=i*(sides+1)+j,b=a+sides+1;ids.push(a,b,a+1,b,b+1,a+1)}return makeMesh(p,n,ids);}
+function buildRing(radius=1,segments=80){let path=[];for(let k=0;k<=segments;k++){let a=k*TWO/segments;path.push([radius*Math.cos(a),0,radius*Math.sin(a)]);}return buildTube(path,.019,5);}
+function buildCylinder(sides=22){let p=[],n=[],ids=[];for(let j=0;j<=1;j++){let y=j-.5;for(let k=0;k<=sides;k++){let a=k*TWO/sides,co=Math.cos(a),si=Math.sin(a);p.push(co,y,si);n.push(co,0,si);}}for(let j=0;j<sides;j++){let a=j,b=a+sides+1;ids.push(a,b,a+1,b,b+1,a+1);}return makeMesh(p,n,ids);}
+function compile(type,src){let s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;}
+
+const scene=$('sceneCard'),cv=$('glCanvas'),fallback=$('fallbackCanvas'),overlay=$('overlayCanvas'),graph=$('graphCanvas');
+const state={theta:0,playing:true,speed:1,previous:0,dirty:true,startDelay:.9};
+let G,upperCable=[],lowerCable=[],coilPath=[],chargeLine=[],lengths=[],totalLength=0,vp,unitsToPixels=1,portrait=false,rendererReady=false;
+const ui={ef:$('electricalFill'),mf:$('magneticFill'),ep:$('electricalPct'),mp:$('magneticPct'),time:$('timeChip'),slider:$('timeSlider')};
+const tr=(x,y,z,sx=1,sy=1,sz=1)=>M.mul(M.translate(x,y,z),M.scale(sx,sy,sz));
+// Ideal LC oscillation: Q_upper/Qmax = cos(theta), I_clockwise/Imax = sin(theta).
+// Capacitor polarity switches at T/4 and 3T/4; current switches at T/2 and T.
+// The plates stay in place; their charges reverse. Both energies sum to one.
+function values(){let q=Math.cos(state.theta),i=Math.sin(state.theta);if(Math.abs(q)<1e-10)q=0;if(Math.abs(i)<1e-10)i=0;const e=q*q;return {q,i,e,m:1-e,absi:Math.abs(i)};}
+// Positive I is clockwise from the capacitor's upper electrode, so I = -dQ_upper/dt.
+function updateUI(){const {e,m}=values(),ep=Math.round(e*100);ui.ef.style.height=e*100+'%';ui.ef.style.setProperty('--energy',e*100+'%');ui.mf.style.height=m*100+'%';ui.mf.style.setProperty('--energy',m*100+'%');ui.ep.textContent=ep+'%';ui.mp.textContent=(100-ep)+'%';ui.time.textContent='t / T = '+(state.theta/TWO).toFixed(2);ui.slider.value=state.theta/MAX_THETA*1000;ui.slider.style.setProperty('--progress',state.theta/MAX_THETA*100+'%');ui.slider.setAttribute('aria-valuetext',(state.theta/TWO).toFixed(2)+' T');}
+function setPlay(flag){state.playing=flag;state.previous=0;const b=$('playBtn');b.title=flag?'إيقاف مؤقت':'تشغيل';b.setAttribute('aria-label',b.title);b.innerHTML=flag?'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>':'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3v18l14-9z"/></svg>';state.dirty=true;}
+function seek(theta){state.startDelay=0;state.theta=clamp(theta,0,MAX_THETA);setPlay(false);drawFrame();}
+$('playBtn').addEventListener('click',()=>setPlay(!state.playing));$('resetBtn').addEventListener('click',()=>seek(0));$('speedSelect').addEventListener('change',e=>{state.speed=+e.target.value;state.dirty=true;});ui.slider.addEventListener('input',e=>seek(+e.target.value/1000*MAX_THETA));
+function smoothCorners(points,radius=.18){let out=[points[0]];for(let j=1;j<points.length-1;j++){const a=points[j-1],b=points[j],c=points[j+1],ab=V.sub(a,b),cb=V.sub(c,b),r=Math.min(radius,Math.hypot(...ab)*.45,Math.hypot(...cb)*.45),start=V.add(b,V.scale(V.norm(ab),r)),end=V.add(b,V.scale(V.norm(cb),r));out.push(start);for(let k=1;k<=8;k++){const t=k/8;out.push(V.add(V.add(V.scale(start,(1-t)*(1-t)),V.scale(b,2*(1-t)*t)),V.scale(end,t*t)));}}out.push(points[points.length-1]);return out;}
+function rebuildGeometry(){
+ portrait=scene.clientWidth/scene.clientHeight<1.30;
+ G={left:portrait?-1.45:-2.75,right:portrait?1.45:2.75,top:portrait?1.95:1.6,z:.54,plateY:.29,plateWidth:1.20,plateHeight:.13,plateDepth:.76,coilRadius:.42,coilY:.88,terminalY:1.20};
+ const {left:xL,right:xR,top,z,plateY,terminalY,coilY,coilRadius:r}=G;
+ upperCable=smoothCorners([[xL,plateY,z],[xL,top,z],[xR,top,z],[xR,terminalY,z]]);
+ lowerCable=smoothCorners([[xR,-terminalY,z],[xR,-top,z],[xL,-top,z],[xL,-plateY,z]]);
+ // One continuous helical conductor; leads end at exactly the same 3D points as the wires.
+ coilPath=[[xR,terminalY,z],[xR+r,1.05,z]];
+ for(let k=0;k<=336;k++){const u=k/336,a=u*TWO*7;coilPath.push([xR+r*Math.cos(a),coilY-2*coilY*u,z+r*Math.sin(a)]);}
+ coilPath.push([xR+r,-1.05,z],[xR,-terminalY,z]);
+ chargeLine=upperCable.concat(coilPath.slice(1),lowerCable.slice(1));lengths=[];totalLength=0;
+ for(let k=1;k<chargeLine.length;k++){totalLength+=Math.hypot(...V.sub(chargeLine[k],chargeLine[k-1]));lengths.push(totalLength);}
+ if(webgl){for(const key of ['wireA','wireB','coil']){if(mesh[key])for(const b of [mesh[key].p,mesh[key].n,mesh[key].idx])gl.deleteBuffer(b);}mesh.wireA=buildTube(upperCable,.058,12);mesh.wireB=buildTube(lowerCable,.058,12);mesh.coil=buildTube(coilPath,.065,12);}
+ state.dirty=true;
+}
+function initWebGL(){try{
+ gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:false,powerPreference:'low-power'});if(!gl)throw Error('No WebGL context');
+ const vs='attribute vec3 aPos;attribute vec3 aNormal;uniform mat4 uViewProj;uniform mat4 uModel;varying vec3 vN;varying vec3 vP;void main(){vec4 p=uModel*vec4(aPos,1.0);vP=p.xyz;vN=mat3(uModel)*aNormal;gl_Position=uViewProj*p;}';
+ const fs='precision mediump float;varying vec3 vN;varying vec3 vP;uniform vec3 uColor;uniform vec3 uEmissive;uniform float uAlpha;void main(){vec3 n=normalize(vN);vec3 l=normalize(vec3(-0.45,0.8,1.3));vec3 v=normalize(vec3(0.0,-1.7,12.0)-vP);float d=max(dot(n,l),0.0);float s=pow(max(dot(n,normalize(l+v)),0.0),44.0);vec3 col=uColor*(0.30+0.76*d)+vec3(0.35)*s+uEmissive;gl_FragColor=vec4(col,uAlpha);}';
+ program=gl.createProgram();gl.attachShader(program,compile(gl.VERTEX_SHADER,vs));gl.attachShader(program,compile(gl.FRAGMENT_SHADER,fs));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error('Shader link failed');gl.useProgram(program);
+ loc={p:gl.getAttribLocation(program,'aPos'),n:gl.getAttribLocation(program,'aNormal'),vp:gl.getUniformLocation(program,'uViewProj'),model:gl.getUniformLocation(program,'uModel'),color:gl.getUniformLocation(program,'uColor'),em:gl.getUniformLocation(program,'uEmissive'),alpha:gl.getUniformLocation(program,'uAlpha')};
+ mesh.box=buildBox();mesh.sphere=buildSphere(10,16);gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);webgl=true;cv.style.display='block';fallback.style.display='none';
+ }catch(e){webgl=false;cv.style.display='none';fallback.style.display='block';}
+}
+function drawMesh(m,color,em=[0,0,0],alpha=1,model=M.identity()){gl.uniformMatrix4fv(loc.model,false,new Float32Array(model));gl.uniform3fv(loc.color,color);gl.uniform3fv(loc.em,em);gl.uniform1f(loc.alpha,alpha);gl.bindBuffer(gl.ARRAY_BUFFER,m.p);gl.enableVertexAttribArray(loc.p);gl.vertexAttribPointer(loc.p,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ARRAY_BUFFER,m.n);gl.enableVertexAttribArray(loc.n);gl.vertexAttribPointer(loc.n,3,gl.FLOAT,false,0,0);gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.idx);gl.drawElements(gl.TRIANGLES,m.cnt,gl.UNSIGNED_SHORT,0);}
+function camera(){
+ const aspect=scene.clientWidth/Math.max(1,scene.clientHeight),halfH=Math.max(G.top+.64,(Math.abs(G.left)+1.05)/aspect),halfW=halfH*aspect,near=.1,far=40;
+ // Fixed overhead orthographic camera, 8 degrees from vertical for visible component depth.
+ const ortho=[1/halfW,0,0,0,0,1/halfH,0,0,0,0,-2/(far-near),0,0,0,-(far+near)/(far-near),1];
+ vp=M.mul(ortho,M.lookAt([0,-1.7,12],[0,0,.1],[0,1,0]));unitsToPixels=scene.clientHeight/(halfH*2);
+}
+function project(v){const p=M.apply(vp,v);return [(p[0]*.5+.5)*scene.clientWidth,(.5-p[1]*.5)*scene.clientHeight,p[2]];}
+function sizeCanvas(canvas){const w=canvas.clientWidth,h=canvas.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2),pw=Math.max(1,Math.round(w*dpr)),ph=Math.max(1,Math.round(h*dpr));if(canvas.width!==pw||canvas.height!==ph){canvas.width=pw;canvas.height=ph;}return {w,h,dpr};}
+function onPath(s){s=((s%totalLength)+totalLength)%totalLength;let lo=0,hi=lengths.length-1;while(lo<hi){let mid=(lo+hi)>>1;if(lengths[mid]<s)lo=mid+1;else hi=mid;}let start=lo?lengths[lo-1]:0;return V.add(chargeLine[lo],V.scale(V.sub(chargeLine[lo+1],chargeLine[lo]),(s-start)/(lengths[lo]-start)));}
+function carrierPositions(){const out=[],shift=2.4*(1-Math.cos(state.theta)),count=Math.round(totalLength/.62);for(let k=0;k<count;k++){const s=(k+.5)*totalLength/count+shift;out.push(onPath(s));}return out;}
+function plateColor(sign,charge){const neutral=[.30,.48,.57],target=sign>0?[.92,.28,.36]:[.20,.50,.93],t=Math.abs(charge);return neutral.map((a,k)=>a+(target[k]-a)*t);}
+function renderWebGL(){sizeCanvas(cv);gl.viewport(0,0,cv.width,cv.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);gl.uniformMatrix4fv(loc.vp,false,new Float32Array(vp));const {q,i,e,absi}=values(),{left:xL,right:xR,top,z}=G;
+ drawMesh(mesh.box,[.07,.17,.22],[0,0,0],1,tr(0,0,-.15,2*(Math.abs(xL)+.84),2*(top+.39),.19));
+ // Two wires and an air-core coil; no conductor bridges the capacitor gap or the coil axis.
+ drawMesh(mesh.wireA,[.20,.57,.64],[0,.016,.02]);drawMesh(mesh.wireB,[.20,.57,.64],[0,.016,.02]);
+ drawMesh(mesh.box,plateColor(Math.sign(q),q),[.025*e,0,0],1,tr(xL,G.plateY,z,G.plateWidth,G.plateHeight,G.plateDepth));
+ drawMesh(mesh.box,plateColor(-Math.sign(q),q),[0,0,.02*e],1,tr(xL,-G.plateY,z,G.plateWidth,G.plateHeight,G.plateDepth));
+ drawMesh(mesh.coil,[.78,.35,.105],[absi*.27,absi*.17,absi*.055]);
+ for(const p of [[xL,G.plateY+.09,z],[xL,-G.plateY-.09,z],[xR,G.terminalY,z],[xR,-G.terminalY,z]])drawMesh(mesh.sphere,[.55,.68,.72],[0,0,0],1,tr(...p,.086,.086,.086));
+ if(absi>.01){for(const p of carrierPositions())drawMesh(mesh.sphere,[.55,.96,.94],[.05,.10,.07],Math.min(1,absi*2),tr(p[0],p[1],p[2]+.047,.035,.035,.035));}
+}
+function renderSoftware(){const {w,h,dpr}=sizeCanvas(fallback),c=fallback.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);const {q,absi}=values(),{left:xL,right:xR,top,z}=G;
+ const polygon=(pts,fill,stroke)=>{c.beginPath();pts.forEach((v,k)=>{let p=project(v);k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]);});c.closePath();c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=.8;c.stroke();}};
+ const css=col=>'rgb('+col.map(v=>Math.round(v*255)).join(',')+')';
+ const box=(x,y,z,sx,sy,sz,color)=>{let a=[x-sx/2,y-sy/2,z+sz/2],b=[x+sx/2,y-sy/2,z+sz/2],d=[x-sx/2,y+sy/2,z+sz/2],e=[x+sx/2,y+sy/2,z+sz/2],a0=[...a],b0=[...b];a0[2]-=sz;b0[2]-=sz;polygon([a0,b0,b,a],css(color.map(v=>v*.53)));polygon([a,b,e,d],css(color),'#c0e5ec35');};
+ const path=(pts,width,color)=>{c.beginPath();pts.forEach((v,k)=>{let p=project(v);k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]);});c.lineWidth=width;c.strokeStyle=color;c.lineCap='round';c.lineJoin='round';c.stroke();};
+ c.save();c.shadowColor='#020d18a0';c.shadowBlur=24;c.shadowOffsetY=12;box(0,0,-.15,2*(Math.abs(xL)+.84),2*(top+.39),.19,[.065,.16,.21]);c.restore();
+ for(const line of [upperCable,lowerCable]){path(line.map(p=>[p[0],p[1],-.04]),.15*unitsToPixels,'#030d1766');path(line,.12*unitsToPixels,'#173c4b');path(line,.078*unitsToPixels,'#528c9c');path(line.map(p=>[p[0]-.012,p[1]+.012,p[2]+.02]),.022*unitsToPixels,'#9ecbd2');}
+ box(xL,G.plateY,z,G.plateWidth,G.plateHeight,G.plateDepth,plateColor(Math.sign(q),q));box(xL,-G.plateY,z,G.plateWidth,G.plateHeight,G.plateDepth,plateColor(-Math.sign(q),q));
+ // Depth-sorted helical segments retain front/back occlusion in the software 3D renderer.
+ const segments=[];for(let k=1;k<coilPath.length;k++)segments.push({a:coilPath[k-1],b:coilPath[k],depth:project(V.scale(V.add(coilPath[k-1],coilPath[k]),.5))[2]});segments.sort((a,b)=>b.depth-a.depth);
+ path(coilPath.map(p=>[p[0],p[1],-.04]),.16*unitsToPixels,'#030d1755');
+ for(const s of segments){let height=(s.a[2]+s.b[2])/2,light=clamp((height-(z-G.coilRadius))/(2*G.coilRadius),0,1);path([s.a,s.b],.13*unitsToPixels,css([.26+.40*light+.18*absi,.105+.24*light+.11*absi,.035+.10*light]));path([s.a,s.b],.055*unitsToPixels,css([.53+.35*light+.11*absi,.25+.30*light+.15*absi,.08+.18*light+.06*absi]));}
+ for(const p of [[xL,G.plateY+.09,z],[xL,-G.plateY-.09,z],[xR,G.terminalY,z],[xR,-G.terminalY,z]]){let a=project(p),r=.086*unitsToPixels,g=c.createRadialGradient(a[0]-r*.3,a[1]-r*.3,0,a[0],a[1],r);g.addColorStop(0,'#d5e4e8');g.addColorStop(.6,'#839da6');g.addColorStop(1,'#3b525d');c.fillStyle=g;c.beginPath();c.arc(a[0],a[1],r,0,TWO);c.fill();}
+ if(absi>.01){c.fillStyle='#a4fff3';c.globalAlpha=Math.min(1,absi*2);for(const p of carrierPositions()){if(p[0]>xR-.6&&Math.abs(p[1])<1&&p[2]<z)continue;const a=project([p[0],p[1],p[2]+.047]);c.beginPath();c.arc(a[0],a[1],Math.max(1,.035*unitsToPixels),0,TWO);c.fill();}c.globalAlpha=1;}
+}
+function renderOverlay(){const {w,h,dpr}=sizeCanvas(overlay),c=overlay.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);const {q,i,e,m,absi}=values(),{left:xL,right:xR,top,z}=G;const font=Math.max(13,Math.min(18,unitsToPixels*.22));
+ const label=(text,p,color,size=font)=>{const a=project(p);c.font='600 '+size+'px Segoe UI,Tahoma,sans-serif';c.textAlign='center';c.textBaseline='middle';c.fillStyle=color;c.fillText(text,a[0],a[1]);};
+ label('C',[xL+.87,0,z],'#a9cbd4');label('L',[xR-.96,0,z],'#a9cbd4');
+ // Plate charge fades during discharge, becomes neutral, then builds with reversed polarity.
+ if(Math.abs(q)>.008){
+  const opacity=Math.abs(q);c.save();c.globalAlpha=opacity;
+  label(q>0?'+':'−',[xL-.84,G.plateY,z+.38],q>0?'#ff8797':'#86baff',font+3);
+  label(q>0?'−':'+',[xL-.84,-G.plateY,z+.38],q>0?'#86baff':'#ff8797',font+3);
+  c.strokeStyle='#f5fcff';c.lineWidth=clamp(unitsToPixels*.014,1,1.7);
+  for(const side of [1,-1])for(const k of [-2,-1,0,1,2]){
+   const p=project([xL+k*.205,side*G.plateY,z+G.plateDepth/2+.02]),r=clamp(unitsToPixels*.026,1.5,3.6);
+   c.beginPath();c.moveTo(p[0]-r,p[1]);c.lineTo(p[0]+r,p[1]);
+   if(q*side>0){c.moveTo(p[0],p[1]-r);c.lineTo(p[0],p[1]+r);}c.stroke();
+  }
+  c.restore();
+ }
+ // The visible field envelope grows with magnetic energy and vanishes at I = 0.
+ if(m>.001){
+  const p=project([xR,0,z]),rx=.77*unitsToPixels,ry=1.12*unitsToPixels;
+  c.save();c.translate(p[0],p[1]);c.scale(1,ry/rx);
+  const g=c.createRadialGradient(0,0,.12*rx,0,0,rx);
+  g.addColorStop(0,'rgba(255,185,94,'+(m*.08)+')');
+  g.addColorStop(.48,'rgba(255,174,79,'+(m*.27)+')');g.addColorStop(1,'rgba(255,174,79,0)');
+  c.fillStyle=g;c.fillRect(-rx,-rx,2*rx,2*rx);c.restore();
+  // Curved exterior field lines return between the ends of the solenoid.
+  // They are not wires: translucent, dashed and confined to the coil.
+  c.save();c.globalAlpha=m*.64;c.strokeStyle='#ffc67b';c.lineWidth=clamp(unitsToPixels*.012,1,1.5);
+  c.setLineDash([unitsToPixels*.04,unitsToPixels*.06]);c.shadowColor='#ffb55d';c.shadowBlur=m*9;
+  for(const side of [-1,1]){
+   c.beginPath();for(let k=0;k<=60;k++){
+    const a=k*Math.PI/60,p=project([xR+side*.71*Math.sin(a),1.08*Math.cos(a),z+.04]);
+    k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]);
+   }c.stroke();
+  }c.restore();
+ }
+ if(e>.001){
+  const a=project([xL,0,z+.2]),rx=.67*unitsToPixels,ry=.25*unitsToPixels;
+  c.save();c.translate(a[0],a[1]);c.scale(1,ry/rx);
+  const g=c.createRadialGradient(0,0,0,0,0,rx);g.addColorStop(0,'rgba(76,228,207,'+(e*.32)+')');g.addColorStop(1,'rgba(76,228,207,0)');
+  c.fillStyle=g;c.fillRect(-rx,-rx,2*rx,2*rx);c.restore();
+ }
+ if(absi>.015){const direction=Math.sign(i),len=.42;
+ for(const [y,dir] of [[top,direction],[-top,-direction]]){const start=project([-dir*len,y,z+.11]),end=project([dir*len,y,z+.11]),angle=Math.atan2(end[1]-start[1],end[0]-start[0]),head=clamp(unitsToPixels*.11,6,11);c.save();c.globalAlpha=Math.min(1,absi*2);c.strokeStyle='#b0fff0';c.fillStyle='#b0fff0';c.lineWidth=2.7;c.shadowColor='#5cf4d6';c.shadowBlur=7*absi;c.beginPath();c.moveTo(start[0],start[1]);c.lineTo(end[0],end[1]);c.stroke();c.translate(end[0],end[1]);c.rotate(angle);c.beginPath();c.moveTo(0,0);c.lineTo(-head,-head*.64);c.lineTo(-head,head*.64);c.closePath();c.fill();c.restore();}
+ }
+}
+function render3d(){if(!G||scene.clientWidth<1||scene.clientHeight<1)return;camera();if(webgl)renderWebGL();else renderSoftware();renderOverlay();}
+function drawGraph(){const {w,h,dpr}=sizeCanvas(graph),c=graph.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);const l=29,r=w-13,t=10,b=h-23,cy=(t+b)/2,amp=(b-t)/2;if(amp<=0)return;
+ c.font='10px Segoe UI,Tahoma,sans-serif';c.textBaseline='middle';
+ for(let k=0;k<=4;k++){let yy=t+k*(b-t)/4;c.strokeStyle=k===2?'#769aa759':'#88b4c018';c.lineWidth=1;c.beginPath();c.moveTo(l,yy);c.lineTo(r,yy);c.stroke();}
+ c.fillStyle='#8eaebb';c.textAlign='right';for(const [v,label]of[[1,'+1'],[0,'0'],[-1,'−1']])c.fillText(label,l-8,cy-v*amp);
+ for(let k=0;k<=4;k++){let xx=l+k*(r-l)/4;c.strokeStyle='#86b9c31c';c.beginPath();c.moveTo(xx,t);c.lineTo(xx,b);c.stroke();c.fillStyle='#9cbac8';c.textAlign='center';c.fillText(['0','T/2','T','3T/2','2T'][k],xx,h-8);}
+ const curve=(fn,color)=>{c.strokeStyle=color;c.lineWidth=2.4;c.beginPath();for(let k=0;k<=360;k++){let xx=l+k/360*(r-l),yy=cy-fn(k/360*MAX_THETA)*amp;k?c.lineTo(xx,yy):c.moveTo(xx,yy);}c.stroke();};curve(Math.cos,'#50e4d1');curve(Math.sin,'#ffb769');
+ const x=l+state.theta/MAX_THETA*(r-l);c.save();c.setLineDash([4,4]);c.lineWidth=1;c.strokeStyle='#dcf4fabb';c.beginPath();c.moveTo(x,t-4);c.lineTo(x,b+4);c.stroke();c.restore();const {q,i}=values();for(const [v,col]of[[q,'#50e4d1'],[i,'#ffb769']]){c.fillStyle=col;c.strokeStyle='#102737';c.lineWidth=2;c.beginPath();c.arc(x,cy-v*amp,4.5,0,TWO);c.fill();c.stroke();}
+}
+function drawFrame(){updateUI();drawGraph();render3d();state.dirty=false;}
+let scrubPointer=null;function graphSeek(e){const b=graph.getBoundingClientRect(),f=clamp((e.clientX-b.left-29)/(b.width-42),0,1);seek(f*MAX_THETA);}
+graph.addEventListener('pointerdown',e=>{scrubPointer=e.pointerId;graph.setPointerCapture(e.pointerId);graphSeek(e);});graph.addEventListener('pointermove',e=>{if(scrubPointer===e.pointerId)graphSeek(e);});for(const event of ['pointerup','pointercancel'])graph.addEventListener(event,()=>scrubPointer=null);
+cv.addEventListener('webglcontextlost',e=>{e.preventDefault();webgl=false;cv.style.display='none';fallback.style.display='block';state.dirty=true;});cv.addEventListener('webglcontextrestored',()=>{mesh={};initWebGL();rebuildGeometry();drawFrame();});
+let lastSize='';const resize=()=>{const size=scene.clientWidth+':'+scene.clientHeight+':'+graph.clientWidth+':'+graph.clientHeight;if(size!==lastSize){lastSize=size;const nowPortrait=scene.clientWidth/Math.max(1,scene.clientHeight)<1.30;if(!G||nowPortrait!==portrait)rebuildGeometry();drawFrame();}};
+window.addEventListener('resize',resize,{passive:true});if(window.ResizeObserver){const ro=new ResizeObserver(resize);ro.observe(scene);ro.observe(graph);}
+document.addEventListener('visibilitychange',()=>{state.previous=0;state.dirty=true;});
+function tick(time){
+ if(document.hidden){state.previous=0;requestAnimationFrame(tick);return;}
+ if(!state.previous)state.previous=time;
+ const delta=Math.min(.06,(time-state.previous)/1000);state.previous=time;
+ if(state.playing){
+  // Briefly show the initial fully charged capacitor before the first discharge.
+  const held=Math.min(delta,state.startDelay);state.startDelay-=held;
+  state.theta+=(delta-held)*(TWO/10)*state.speed;
+  if(state.theta>MAX_THETA)state.theta%=MAX_THETA;state.dirty=true;
+ }
+ if(state.dirty)drawFrame();requestAnimationFrame(tick);
+}
+initWebGL();rebuildGeometry();setPlay(true);drawFrame();requestAnimationFrame(tick);
+
+})();
+</script>
+</body>
+</html>
